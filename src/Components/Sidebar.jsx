@@ -38,7 +38,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           />
           {isOpen && (
             <label
-              className={`text-[1.75vw] font-semibold mt-[-1vh] whitespace-nowrap transition-all duration-500 ease-in-out
+              className={`text-[1.6vw] font-semibold mt-[-1vh] whitespace-nowrap transition-all duration-500 ease-in-out
     opacity-0 max-w-0 overflow-hidden ${
       isOpen ? "opacity-100 max-w-[200px] " : ""
     }`}

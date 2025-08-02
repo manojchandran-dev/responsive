@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import { MdOutlineClose } from "react-icons/md";
 
 export default function GridSampleTwo() {
-  const [selectedPane, setSelectedPane] = useState(null);
   const [screenType, setScreenType] = useState("mobile");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activeGrids, setActiveGrids] = useState(0);
 
   useEffect(() => {
     const updateScreen = () => {
@@ -20,71 +22,32 @@ export default function GridSampleTwo() {
   const visibleCount =
     screenType === "desktop" ? 12 : screenType === "tablet" ? 6 : 3;
 
-  const getPaneIndexes = (pane) => {
-    const map = {
-      desktop: {
-        Left: [0, 1, 2, 3],
-        Center: [4, 5, 6, 7],
-        Right: [8, 9, 10, 11],
-      },
-      tablet: {
-        Left: [0, 1],
-        Center: [2, 3],
-        Right: [4, 5],
-      },
-      mobile: {
-        Left: [0],
-        Center: [1],
-        Right: [2],
-      },
-    };
-    return map[screenType]?.[pane] || [];
-  };
-
   return (
-    <div className="w-full h-full">
-      <div className="h-auto md:h-[10vh] px-[2vw] flex flex-col md:flex-row items-start md:items-center justify-between gap-3 py-2 md:py-0">
+    <div className="w-full h-full relative">
+      <div className="h-auto md:h-[10vh] px-[2vw] pt-[2vh] md:pt-0 flex items-center justify-between ">
         <label className="text-[5vw] md:text-[1.5vw] font-semibold">
           Grid Sample Two
         </label>
 
-        <div className="relative w-full md:w-auto md:pb-0 ">
-          <select
-            className="appearance-none text-[4vw] md:text-[1vw] outline-none rounded px-4 py-2 w-full md:w-[12vw]"
-            style={{
-              background:
-                "linear-gradient(white, white) padding-box, linear-gradient(to bottom, #539C43, #6EAE40, #9CC93B) border-box",
-              border: "1px solid transparent",
-              borderRadius: "0.5rem",
-            }}
-            onChange={(e) => setSelectedPane(e.target.value)}
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select a pane
-            </option>
-            <option value="Left">Left</option>
-            <option value="Center">Center</option>
-            <option value="Right">Right</option>
-          </select>
-
-          <div className="pointer-events-none absolute right-4 top-1/2 transform -translate-y-1/2">
-            <FaChevronDown className="md:text-[1vw] text-[4vw]" color="#9CC93B" />
-          </div>
-        </div>
+        <button
+          onClick={() => setDrawerOpen(true)}
+          className="bg-[#6EAE40] text-white font-bold rounded px-[2vw] py-[0.5vw] text-[4vw] md:text-[1vw]"
+        >
+          Open
+        </button>
       </div>
 
       <div className="h-[90vh] w-full px-[2vw] md:pt-0 pt-[2vh]">
         <main className="flex-1 h-full pb-[4vh]">
-          <div className="h-full grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-12 ">
+          <div className="h-full grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-12">
             {Array.from({ length: 12 })
               .slice(0, visibleCount)
               .map((_, index) => {
-                const isSelected = getPaneIndexes(selectedPane).includes(index);
+                const isSelected = index < activeGrids;
                 return (
                   <div
                     key={index}
-                    className={`h-full   flex items-center justify-center cursor-pointer text-[1.5vw] font-semibold ${
+                    className={`h-full flex items-center justify-center cursor-pointer text-[1.5vw] font-semibold ${
                       isSelected ? "text-white" : "bg-gray-100 text-black"
                     }`}
                     style={{
@@ -98,6 +61,33 @@ export default function GridSampleTwo() {
           </div>
         </main>
       </div>
+      {drawerOpen && (
+        <div className="fixed right-0 top-0 h-full w-[60vw] md:w-[20vw] bg-gray-200 border-l border-gray-300 shadow-xl z-50 p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-[4vw] md:text-[1.25vw] font-semibold">
+              Choose Grid Count
+            </h2>
+            <button
+              onClick={() => setDrawerOpen(false)}
+              className="text-black text-[4vw] md:text-[1.2vw] font-semibold"
+            >
+              <MdOutlineClose className="text-[5vw] md:text-[1.25vw]" />
+            </button>
+          </div>
+
+          <input
+            type="number"
+            min="0"
+            max={visibleCount}
+            value={activeGrids}
+            onChange={(e) =>
+              setActiveGrids(Math.min(visibleCount, Number(e.target.value)))
+            }
+            className="w-full border border-gray-300 rounded px-4 py-2 text-[4vw] md:text-[1vw] mb-4"
+            placeholder={`Enter number (0 - ${visibleCount})`}
+          />
+        </div>
+      )}
     </div>
   );
 }
