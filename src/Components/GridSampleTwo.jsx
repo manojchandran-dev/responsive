@@ -5,7 +5,6 @@ export default function GridSampleTwo() {
   const [selectedPane, setSelectedPane] = useState(null);
   const [screenType, setScreenType] = useState("mobile");
 
-  // Update screen type on resize
   useEffect(() => {
     const updateScreen = () => {
       const w = window.innerWidth;

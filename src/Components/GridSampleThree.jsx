@@ -24,7 +24,6 @@ export default function GridSampleThree() {
 
   return (
     <div className="w-full min-h-screen flex flex-col">
-      {/* Header */}
       <div className="h-auto px-[2vw] flex flex-col md:flex-row items-start md:items-center justify-between gap-3 py-4">
         <label className="text-[5vw] md:text-[1.5vw] font-semibold">
           Grid Sample Three
@@ -59,7 +58,6 @@ export default function GridSampleThree() {
         </div>
       </div>
 
-      {/* Grid section - flex-grow to fill remaining height, center content */}
       <div className="flex-grow flex items-center justify-center px-[2vw]">
         <main className="w-full">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">

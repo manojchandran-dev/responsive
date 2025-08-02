@@ -5,7 +5,6 @@ export default function GridSampleOne() {
   const [selectedPane, setSelectedPane] = useState(null);
   const [screenType, setScreenType] = useState("mobile");
 
-  // Update screen type on resize
   useEffect(() => {
     const updateScreen = () => {
       const w = window.innerWidth;
@@ -69,7 +68,6 @@ export default function GridSampleOne() {
             <option value="Right">Right</option>
           </select>
 
-          {/* Chevron */}
           <div className="pointer-events-none absolute right-4 top-1/2 transform -translate-y-1/2">
             <FaChevronDown
               className="md:text-[1vw] text-[4vw]"
