@@ -32,7 +32,6 @@ export default function MobileResponsiveSidebar() {
     navigate(path);
     setDrawerOpen(false);
   };
-
   return (
     <div className="md:hidden block">
       <div className="h-[6.5vh] bg-gray-800 text-white flex items-center justify-between px-4">
